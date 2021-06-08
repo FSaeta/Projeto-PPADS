@@ -45,12 +45,12 @@ class Usuario(AbstractUser):
     def __str__(self):
         return self.username
 
-    def enviar_pedido_amizade(self, id_user_recebido):
-        amigo_obj = Usuario.objects.get(pk=id_user_recebido)
+    def enviar_pedido_amizade(self, user_recebido):
         meus_pedidos = self.user_enviado.all()
-        if amigo_obj not in meus_pedidos.filter(user_recebido=amigo_obj):
-            pedido_amizade = PedidosAmizade(user_enviado=self, user_recebido=amigo_obj)
+        if user_recebido not in meus_pedidos.filter(user_recebido=user_recebido):
+            pedido_amizade = PedidosAmizade(user_enviado=self, user_recebido=user_recebido)
             pedido_amizade.save()
+            pedido_amizade.get_amigos_comum()
     
     def get_amigos_comum(self, user):
         amigos = [amigo for amigo in self.amigos.all() if amigo in user.amigos.all()]

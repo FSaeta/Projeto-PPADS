@@ -5,7 +5,11 @@
 <div class="bg-dark" style="padding: 20px;">
     <div class="container">
         <div class="text-center text-white">
+            {% if usuario != user %}
             <h1 style="font-weight:bolder; font-size: 50px;">Usuário {{usuario.username}}</h1><br>
+            {% else %}
+            <h1 style="font-weight:bolder; font-size: 50px;">Minha Conta</h1><br>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -25,20 +29,30 @@
             <div style="padding-left: 10px;">
                 <p class="fw-bolder">
                     Amigos: {{usuario.amigos.all.count}}<br>
+                    {% if usuario != user %}
                     Amigos em Comum: {{count_amigos_comum}}<br>
+                    {% endif %}
                 </p>
             </div>
         </div>
+        {% if usuario != user %}
         <div class="card-footer pt-0 border-top-0 bg-transparent">
-            <form action="{% url 'amigos' %}" method="POST">
+            <form action="{% url 'usuario' pk=usuario.id %}" method="POST">
                 {% csrf_token %}
-                <input type="number" value="{{amigo.id}}" name="id_amigo" style="display: none;">
+                <input type="number" value="{{usuario.id}}" name="id_usuario" style="display: none;">
                 <div class="text-center">
-                    <input type="submit" class="btn btn-outline-red" value="Excluir Amigo">
+                    {% if sao_amigos %}
+                    <input type="submit" name="excluir_amigo" class="btn btn-outline-red" value="Excluir Amigo">
+                    {% elif pedido_enviado %}
+                    <a class="btn btn-outline-dark">Pedido de Amizade Enviado</a>
+                    {% else %}
+                    <input type="submit" name="adicionar_amigo" class="btn btn-outline-green" value="Adicionar Amigo">
+                    {% endif %}
                     <a class="btn btn-outline-dark" href="{% url 'pedidos_amizade' %}">Ver Amigos em Comum</a>
                 </div>
             </form>
         </div>
+        {% endif %}
     </div>
 </div>
 

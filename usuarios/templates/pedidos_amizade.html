@@ -19,24 +19,23 @@
                 <div class="card">
                     <div class="card-body p-4">
                         <div class="text-center">
-                            <h5 class="fw-bolder">{{pedido.titulo}}</h5>
+                            <h5 class="fw-bolder">{{pedido.user_enviado.username}}</h5>
                             <p class="fw-bolder">{{pedido.tipo}}</p>
                             <p>
-                                {{item.categoria}}<br>
-                                {{item.ano_lancamento}}
-                            </p>
-                            <p style="padding: 0px; margin: 0px;">
-                                {% if item.tipo == 'livro' %}
-                                    {{item.autor}}
-                                {% else %}
-                                    {{item.diretor}}
-                                {% endif %}
+
                             </p>
                         </div>
                     </div>
                     <div class="card-footer pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark" href="{% url 'item' tipo_item=item.tipo pk=item.pk %}">Vizualizar</a></div>
-                        <div class="text-center"><a class="btn btn-outline-dark" href="#" style="margin-top:10px;">Avaliar</a></div>
+                        <form action="{% url 'pedidos_amizade' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="number" value="{{pedido.id}}" name="id_pedido" style="display: none;">
+                            <div class="text-center" style="padding: 5px;">
+                                <a class="btn btn-outline-dark" href="{% url 'usuario' pk=pedido.user_enviado.pk %}" style="margin-bottom: 10px;">Vizualizar Usuario</a>
+                                <input type="submit" name="aceitar_pedido" class="btn btn-outline-green" value="Adicionar Amigo" style="margin-bottom: 10px;"><br>
+                                <input type="submit" name="recusar_pedido" class="btn btn-outline-red" value="Recusar Pedido">
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
