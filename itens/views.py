@@ -4,6 +4,36 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from .forms import CadastroFilme, CadastroSerie, CadastroLivro
 
+def get_itens_context(tipo_item):
+    if tipo_item == 'filme':
+        classe_item = Filme
+        item_name = 'Filme'
+        plural_item_name = 'Filmes'
+        form = CadastroFilme()
+
+    elif tipo_item == 'livro':
+        classe_item = Livro
+        item_name = 'Livro'
+        plural_item_name = 'Livros'
+        form = CadastroLivro()
+
+    elif tipo_item == 'serie':
+        classe_item = Serie
+        item_name = 'Série'
+        plural_item_name = 'Séries'
+        form = CadastroSerie()
+    
+    values = {
+        'tipo_item': tipo_item,
+        'classe_item': classe_item,
+        'item_name': item_name,
+        'plural_item_name': plural_item_name,
+        'form': form,
+    }
+
+    return values
+
+
 def index(request):
     context = {}
 
@@ -15,84 +45,33 @@ def index(request):
 
 def itens(request, tipo_item):
     context = {}
-    context['tipo_item'] = tipo_item
-    if tipo_item == 'filme':
-        classe_item = Filme
-        item_name = 'Filme'
-        plural_item_name = 'Filmes'
-
-    elif tipo_item == 'livro':
-        classe_item = Livro
-        item_name = 'Livro'
-        plural_item_name = 'Livros'
-
-    elif tipo_item == 'serie':
-        classe_item = Serie
-        item_name = 'Série'
-        plural_item_name = 'Séries'
-    else:
+    if tipo_item not in ('filme', 'livro', 'serie'):
         return redirect('/')
-
-    itens_objs = classe_item.objects.filter(ativo=True)
-
+    context.update(get_itens_context(tipo_item))
+    itens_objs = context['classe_item'].objects.filter(ativo=True)
     context.update({
         'itens': itens_objs,
-        'item_name': item_name,
-        'plural_item_name': plural_item_name,
     })
-
     return render(request, 'itens.html', context)
 
 def item(request, tipo_item, pk):
     context = {}
-    context['tipo_item'] = tipo_item
-
-    if tipo_item == 'filme':
-        classe_item = Filme
-        item_name = 'Filme'
-        plural_item_name = 'Filmes'
-
-    elif tipo_item == 'livro':
-        classe_item = Livro
-        item_name = 'Livro'
-        plural_item_name = 'Livros'
-
-    elif tipo_item == 'serie':
-        classe_item = Serie
-        item_name = 'Série'
-        plural_item_name = 'Séries'
-    else:
+    if tipo_item not in ('filme', 'livro', 'serie'):
         return redirect('/')
+    context.update(get_itens_context(tipo_item))
 
-    item_obj = get_object_or_404(classe_item, id=pk)
+    item_obj = get_object_or_404(context['classe_item'], id=pk)
+    
     context.update({
         'item': item_obj,
-        'item_name': item_name,
-        'plural_item_name': plural_item_name,
     })
     return render(request, 'item.html', context)
 
 def cadastrar_item(request, tipo_item):
     context = {}
-    context['tipo_item'] = tipo_item
-
-    if tipo_item == 'filme':
-        classe_item = Filme
-        item_name = 'Filme'
-        plural_item_name = 'Filmes'
-        form = CadastroFilme()
-    elif tipo_item == 'livro':
-        classe_item = Livro
-        item_name = 'Livro'
-        plural_item_name = 'Livros'
-        form = CadastroLivro()
-    elif tipo_item == 'serie':
-        classe_item = Serie
-        item_name = 'Série'
-        plural_item_name = 'Séries'
-        form = CadastroSerie()
-    else:
+    if tipo_item not in ('filme', 'livro', 'serie'):
         return redirect('/')
+    context.update(get_itens_context(tipo_item))
     
     if request.method == 'POST':
         values_post = {}
@@ -100,25 +79,18 @@ def cadastrar_item(request, tipo_item):
             values_post.update({k:v})
         values_post['user_id'] = request.user.id
         values_post['tipo'] = tipo_item
-        
-        if tipo_item == 'filme':
-            form = CadastroFilme(values_post)
-        elif tipo_item == 'livro':
-            form = CadastroLivro(values_post)
-        elif tipo_item == 'serie':
-            form = CadastroSerie(values_post)
-        import pdb; pdb.set_trace()
-        
+
+        form = context['form'].__class__(values_post)
         if form.is_valid():
             form.save()
             context['mensagem_status'] = "Cadastro realizado com sucesso !"
         else:
             context['erro'] = True
             context['mensagem_status'] = "Algo está errado com o seu cadastro !"
+        context['form'] = form
 
-    context.update({
-        'form': form,
-        'item_name': item_name,
-        'plural_item_name': plural_item_name,
-    })
     return render(request, 'cadastro_item.html', context)
+
+def validar_cadastros(request):
+    context = {}
+    return render(request, 'validar_cadastros.html', context)

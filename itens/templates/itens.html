@@ -21,7 +21,17 @@
                         <div class="text-center">
                             <h5 class="fw-bolder">{{item.titulo}}</h5>
                             <p class="fw-bolder">{{item.tipo}}</p>
-                            <p>{{item.categoria}}</p>
+                            <p>
+                                {{item.categoria}}<br>
+                                {{item.ano_lancamento}}
+                            </p>
+                            <p style="padding: 0px; margin: 0px;">
+                                {% if item.tipo == 'livro' %}
+                                    {{item.autor}}
+                                {% else %}
+                                    {{item.diretor}}
+                                {% endif %}
+                            </p>
                         </div>
                     </div>
                     <div class="card-footer pt-0 border-top-0 bg-transparent">
