@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Banner -->
+<div class="bg-dark" style="padding: 20px;">
+    <div class="container">
+        <div class="text-center text-white">
+            <h1 style="font-weight:bolder; font-size: 50px;">Cadastrar {{item_name}}</h1>
+        </div>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row justify-content-center" style="text-align:center;">
+            <form method="POST" action="{% url 'cadastrar_item' tipo_item=tipo_item %}" class="cadastro_item_form">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="number" class="form-control" name='user_id' id='id_user_id' value="{{user.id}}">
+                <input type="text" class="form-control" name='tipo' id='id_tipo' value="{{tipo_item}}">
+                <input type="submit" class="btn btn-outline-dark" value="Cadastrar" style="background-color: yellowgreen; margin-top: 40px; width: 50%;">
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
