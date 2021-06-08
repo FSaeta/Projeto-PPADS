@@ -41,6 +41,7 @@ def view_usuario(request, pk):
 
     context.update({
         'usuario': usuario,
+        'amigos_comum': amigos_comum,
         'count_amigos_comum': len(amigos_comum)
     })
 

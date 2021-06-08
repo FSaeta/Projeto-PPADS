@@ -12,7 +12,12 @@
             {% endif %}
             <a id="btn-avaliacoes" class="btn btn-outline-dark" style="color: white; border-color: white;">Avaliações</a>
             <a id="btn-todos_amigos" class="btn btn-outline-dark" style="color: white; border-color: white;">Amigos</a>
+            {% if usuario != user %}
             <a id="btn-amigos_comum" class="btn btn-outline-dark" style="color: white; border-color: white;">Amigos em Comum</a>
+            {% else %}
+            <a id="btn-editar_perfil" class="btn btn-outline-dark" style="color: white; border-color: white;">Editar Dados</a>
+            <a id="btn-alterar_senha" class="btn btn-outline-dark" style="color: white; border-color: white;">Alterar Senha</a>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -51,7 +56,6 @@
                     {% else %}
                     <input type="submit" name="adicionar_amigo" class="btn btn-outline-green" value="Adicionar Amigo">
                     {% endif %}
-                    <a class="btn btn-outline-dark" href="{% url 'pedidos_amizade' %}">Ver Amigos em Comum</a>
                 </div>
             </form>
         </div>
@@ -76,9 +80,19 @@
         <div class="container">
             <div class="text-center text-white">
                 <h1 style="font-size: 40px;">Amigos do Usuário</h1>
+                <p>{{usuario.amigos.all.count}} Amigo{% if count_amigos_comum != 1 %}s{% endif %}</p>
             </div>
         </div>
     </div>
+    <section class="py-5">
+        <div class="container px-4">
+            <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
+                {% for amigo in usuario.amigos.all %}
+                {% include 'card_usuario.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 </div>
 
 
@@ -88,8 +102,19 @@
         <div class="container">
             <div class="text-center text-white">
                 <h1 style="font-size: 40px;">Amigos em Comum</h1>
+                <p>{{count_amigos_comum}} Amigo{% if count_amigos_comum != 1 %}s{% endif %} em Comum</p>
             </div>
         </div>
     </div>
+    <section class="py-5">
+        <div class="container px-4">
+            <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
+                {% for amigo in amigos_comum %}
+                {% include 'card_usuario.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 </div>
+
 {% endblock %}
