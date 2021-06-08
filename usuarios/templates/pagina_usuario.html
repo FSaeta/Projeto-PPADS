@@ -10,6 +10,9 @@
             {% else %}
             <h1 style="font-weight:bolder; font-size: 50px;">Minha Conta</h1><br>
             {% endif %}
+            <a id="btn-avaliacoes" class="btn btn-outline-dark" style="color: white; border-color: white;">Avaliações</a>
+            <a id="btn-todos_amigos" class="btn btn-outline-dark" style="color: white; border-color: white;">Amigos</a>
+            <a id="btn-amigos_comum" class="btn btn-outline-dark" style="color: white; border-color: white;">Amigos em Comum</a>
         </div>
     </div>
 </div>
@@ -57,10 +60,35 @@
 </div>
 
 <!-- Avaliações -->
-<div class="bg-dark" style="padding: 20px;">
-    <div class="container">
-        <div class="text-center text-white">
-            <h1 style="font-size: 40px;">Avaliações do Usuário</h1>
+<div id='div-avaliacoes' style="display: none;">
+    <div class="bg-dark" style="padding: 20px;">
+        <div class="container">
+            <div class="text-center text-white">
+                <h1 style="font-size: 40px;">Avaliações do Usuário</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Todos Amigos -->
+<div id='div-todos_amigos' style="display: none;">
+    <div class="bg-dark" style="padding: 20px;">
+        <div class="container">
+            <div class="text-center text-white">
+                <h1 style="font-size: 40px;">Amigos do Usuário</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Amigos em Comum -->
+<div id='div-amigos_comum' style="display: none;">
+    <div class="bg-dark" style="padding: 20px;">
+        <div class="container">
+            <div class="text-center text-white">
+                <h1 style="font-size: 40px;">Amigos em Comum</h1>
+            </div>
         </div>
     </div>
 </div>
