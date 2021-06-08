@@ -3575,6 +3575,24 @@ textarea.form-control-lg {
   background-color: #212529;
   border-color: #212529;
 }
+.btn-outline-green {
+  color: #008a07;
+  border-color: #212529;
+}
+.btn-outline-green:hover {
+  color: #fff;
+  background-color: #379e22;
+  border-color: #212529;
+}
+.btn-outline-red {
+  color: #ac0000;
+  border-color: #212529;
+}
+.btn-outline-red:hover {
+  color: #fff;
+  background-color: #d11616;
+  border-color: #212529;
+}
 .cadastro_item_form{
   width: 50%;
 }

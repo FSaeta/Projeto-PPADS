@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Banner -->
+<div class="bg-dark" style="padding: 20px;">
+    <div class="container">
+        <div class="text-center text-white">
+            <h1 style="font-weight:bolder; font-size: 50px;">Validar Cadastros de {{plural_item_name}}</h1>
+            <div style="margin-top: 30px;">
+                <a class="btn btn-outline-dark" href="{% url 'validar_cadastros' tipo_item='filme' %}" style="color: white; border-color: white;">Validar Filmes</a>
+                <a class="btn btn-outline-dark" href="{% url 'validar_cadastros' tipo_item='livro' %}" style="color: white; border-color: white;">Validar Livros</a>
+                <a class="btn btn-outline-dark" href="{% url 'validar_cadastros' tipo_item='serie' %}" style="color: white; border-color: white;">Validar Séries</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
+            {% for item in itens %}
+            <div class="col" style="margin: 10px;">
+                <div class="card">
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <h5 class="fw-bolder">{{item.titulo}}</h5>
+                            <p class="fw-bolder">{{item.tipo}}</p>
+                            <p>
+                                {{item.categoria}}<br>
+                                {{item.ano_lancamento}}
+                            </p>
+                            <p style="padding: 0px; margin: 0px;">
+                                {% if item.tipo == 'livro' %}
+                                    {{item.autor}}
+                                {% else %}
+                                    {{item.diretor}}
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card-footer pt-0 border-top-0 bg-transparent text-center">
+                        <form method="POST" action="{% url 'validar_cadastros' tipo_item=tipo_item %}">
+                            {% csrf_token %}
+                            <input type="number" value="{{item.id}}" name="id_item" style="display: none;">
+                            <a class="btn btn-outline-dark" href="{% url 'item' tipo_item=item.tipo pk=item.pk %}">Vizualizar</a><br>
+                            <input type="submit" name="validar" class="btn btn-outline-green" style="margin-top:10px;" value="Validar">
+                            <input type="submit" name="excluir" class="btn btn-outline-red" style="margin-top:10px;" value="Excluir">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

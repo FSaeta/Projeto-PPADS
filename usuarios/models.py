@@ -52,10 +52,6 @@ class Usuario(AbstractUser):
             pedido_amizade = PedidosAmizade(user_enviado=self, user_recebido=amigo_obj)
             pedido_amizade.save()
     
-    def remover_amigo(self, amigo_id):
-        amigo_obj = Usuario.objects.get(pk=amigo_id)
-        self.amigos.remove(amigo_obj)
-    
     def get_amigos_comum(self, user):
         amigos = [amigo for amigo in self.amigos.all() if amigo in user.amigos.all()]
         num_amigos = len(amigos)
@@ -92,6 +88,12 @@ class PedidosAmizade(models.Model):
     user_enviado = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='user_enviado')
     user_recebido = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='user_recebido')
     aceito = models.BooleanField('Aceito', default=False)
+    amigos_comum = models.ManyToManyField(Usuario)
+
+    def get_amigos_comum(self):
+        amigos_comum = [amigo for amigo in self.user_enviado.amigos.all() if amigo in self.user_recebido.amigos.all()]
+        for amigo in amigos_comum:
+            self.amigos_comum.add(amigo)
 
     def aceitar_pedido(self):
         self.user_enviado.amigos.add(self.user_recebido)

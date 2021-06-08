@@ -10,19 +10,16 @@ def get_itens_context(tipo_item):
         item_name = 'Filme'
         plural_item_name = 'Filmes'
         form = CadastroFilme()
-
     elif tipo_item == 'livro':
         classe_item = Livro
         item_name = 'Livro'
         plural_item_name = 'Livros'
         form = CadastroLivro()
-
     elif tipo_item == 'serie':
         classe_item = Serie
         item_name = 'Série'
         plural_item_name = 'Séries'
         form = CadastroSerie()
-    
     values = {
         'tipo_item': tipo_item,
         'classe_item': classe_item,
@@ -30,7 +27,6 @@ def get_itens_context(tipo_item):
         'plural_item_name': plural_item_name,
         'form': form,
     }
-
     return values
 
 
@@ -48,7 +44,7 @@ def itens(request, tipo_item):
     if tipo_item not in ('filme', 'livro', 'serie'):
         return redirect('/')
     context.update(get_itens_context(tipo_item))
-    itens_objs = context['classe_item'].objects.filter(ativo=True)
+    itens_objs = context['classe_item'].objects.filter(ativo=True).order_by('data_criacao')
     context.update({
         'itens': itens_objs,
     })
@@ -91,6 +87,19 @@ def cadastrar_item(request, tipo_item):
 
     return render(request, 'cadastro_item.html', context)
 
-def validar_cadastros(request):
+def validar_cadastros(request, tipo_item):
     context = {}
+    if tipo_item not in ('filme', 'livro', 'serie'):
+        return redirect('/')
+    context.update(get_itens_context(tipo_item))
+
+    if request.method == 'POST':
+        item = context['classe_item'].objects.get(id=request.POST.get('id_item'))
+        if 'validar' in request.POST:
+            item.aprovar_cadastro(request.user)
+        elif 'excluir' in request.POST:
+            item.excluir_cadastro(request.user)
+    
+    itens_objs = context['classe_item'].objects.filter(ativo=False).order_by('data_criacao')
+    context.update({'itens': itens_objs})
     return render(request, 'validar_cadastros.html', context)

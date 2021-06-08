@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Banner -->
+<div class="bg-dark" style="padding: 20px;">
+    <div class="container">
+        <div class="text-center text-white">
+            <h1 style="font-weight:bolder; font-size: 50px;">Usuário {{usuario.username}}</h1><br>
+        </div>
+    </div>
+</div>
+<div style="margin: 10px auto; width: 70%;">
+    <div class="card">
+        <div class="card-body p-4">
+            <div class="text-center">
+                <h5 class="fw-bolder">{{usuario.username}}</h5>
+            </div>
+            <div style="padding-left: 10px;">
+                <p class="fw-bolder">
+                    Séries cadastradas: {{usuario.serie_set.all.count}}<br>
+                    Filmes cadastrados: {{usuario.filme_set.all.count}}<br>
+                    Livros cadastrados: {{usuario.livro_set.all.count}}<br>
+                </p>
+            </div>
+            <div style="padding-left: 10px;">
+                <p class="fw-bolder">
+                    Amigos: {{usuario.amigos.all.count}}<br>
+                    Amigos em Comum: {{count_amigos_comum}}<br>
+                </p>
+            </div>
+        </div>
+        <div class="card-footer pt-0 border-top-0 bg-transparent">
+            <form action="{% url 'amigos' %}" method="POST">
+                {% csrf_token %}
+                <input type="number" value="{{amigo.id}}" name="id_amigo" style="display: none;">
+                <div class="text-center">
+                    <input type="submit" class="btn btn-outline-red" value="Excluir Amigo">
+                    <a class="btn btn-outline-dark" href="{% url 'pedidos_amizade' %}">Ver Amigos em Comum</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Avaliações -->
+<div class="bg-dark" style="padding: 20px;">
+    <div class="container">
+        <div class="text-center text-white">
+            <h1 style="font-size: 40px;">Avaliações do Usuário</h1>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Banner -->
+<div class="bg-dark" style="padding: 20px;">
+    <div class="container">
+        <div class="text-center text-white">
+            <h1 style="font-weight:bolder; font-size: 50px;">Pedidos de Amizade</h1><br>
+            <a class="btn btn-outline-dark" href="{% url 'amigos' %}" style="color: white; border-color: white;">Meus Amigos</a>
+        </div>
+    </div>
+</div>
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
+            {% for pedido in pedidos %}
+            <div class="col" style="margin: 10px;">
+                <div class="card">
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <h5 class="fw-bolder">{{pedido.titulo}}</h5>
+                            <p class="fw-bolder">{{pedido.tipo}}</p>
+                            <p>
+                                {{item.categoria}}<br>
+                                {{item.ano_lancamento}}
+                            </p>
+                            <p style="padding: 0px; margin: 0px;">
+                                {% if item.tipo == 'livro' %}
+                                    {{item.autor}}
+                                {% else %}
+                                    {{item.diretor}}
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card-footer pt-0 border-top-0 bg-transparent">
+                        <div class="text-center"><a class="btn btn-outline-dark" href="{% url 'item' tipo_item=item.tipo pk=item.pk %}">Vizualizar</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark" href="#" style="margin-top:10px;">Avaliar</a></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

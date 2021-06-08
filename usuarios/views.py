@@ -22,10 +22,31 @@ def cadastro(request):
 
 def view_usuario(request, pk):
     context = {}
+    usuario = Usuario.objects.get(pk=pk)
+    amigos_comum = [amigo for amigo in usuario.amigos.all() if amigo in request.user.amigos.all()]
+    if usuario in request.user.amigos.all():
+        context['sao_amigos'] = True
+
+    context.update({
+        'usuario': usuario,
+        'count_amigos_comum': len(amigos_comum)
+    })
 
     return render(request, 'pagina_usuario.html', context)
 
-def minha_conta(request):
+def amigos(request):
     context = {}
 
-    return render(request, 'minha_conta.html', context)
+    if request.method == 'POST':
+        amigo = Usuario.objects.get(pk=request.POST.get('id_amigo'))
+        if 'excluir_amigo' in request.POST:
+            request.user.amigos.remove(amigo)
+
+    amigos = request.user.amigos.all().order_by('username')
+    context['amigos'] = amigos
+    return render(request, 'amigos.html', context)
+
+def pedidos_amizade(request):
+    context = {}
+
+    return render(request, 'pedidos_amizade.html', context)
