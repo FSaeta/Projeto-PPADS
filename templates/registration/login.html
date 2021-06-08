@@ -1,0 +1,34 @@
+{% extends 'cadastro_base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="wrapper fadeInDown">
+    {% if user.is_authenticated %}
+    <div id="formContent">
+        <div class="fadeIn first">
+            <h3 style="margin: 20px 0px;">Você já está logado</h3>
+        </div>
+        <a href="{% url 'index' %}" class="fadeIn fourth botao-a">Voltar para Página principal</a>
+        <a href="{% url 'logout' %}" class="fadeIn fourth botao-a">logout</a>
+    </div>
+    {% else %}
+    <div id="formContent">
+        <div class="fadeIn first">
+            <h1 style="margin: 20px 0px;">HiperFlix</h1>
+        </div>
+        <div class="fadeIn fifth">
+            <h3 style="margin: 20px 0px;">Faça o login para acessar o site</h3>
+        </div>
+      <!-- Login Form -->
+      <form method="POST" action="{% url 'login' %}" style="padding: auto 40px;">
+        {% csrf_token %}
+        <input type="text" id="login" class="fadeIn second form-control" name="username" placeholder="username">
+        <input type="password" id="password" class="fadeIn third form-control" name="password" placeholder="senha">
+        <input type="submit" class="fadeIn fourth form-control" value="Login" style="margin: 15px 20px 10px; width: 252px;">
+        <a href="{% url 'cadastro' %}" id="cadastrar" class="fadeIn fourth botao-a">Cadastre-se</a>
+      </form>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
