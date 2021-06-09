@@ -1,0 +1,38 @@
+<div class="col" style="margin: 10px;">
+    <div class="card">
+        <div class="card-body p-4">
+            <div class="text-center">
+                <h5 class="fw-bolder">{{avaliacao.tipo.to_upper_case}}</h5>
+            </div>
+            <div style="padding-left: 10px;">
+                <p class="fw-bolder">
+                    Séries cadastradas: {{amigo.serie_set.all.count}}<br>
+                    Filmes cadastrados: {{amigo.filme_set.all.count}}<br>
+                    Livros cadastrados: {{amigo.livro_set.all.count}}<br>
+                </p>
+                <p class="fw-bolder">
+                    Amigos: {{amigo.amigos.all.count}}<br>
+                </p>
+            </div>
+        </div>
+        <div class="card-footer pt-0 border-top-0 bg-transparent">
+            <form action="{% url 'usuario' pk=usuario.id %}" method="POST">
+                {% csrf_token %}
+                <input type="number" value=1 name='session_amigos' style="display: none;">
+                <input type="number" value="{{amigo.id}}" name="id_amigo" style="display: none;">
+                <div class="text-center">
+                    {% if amigo != user %}
+                        {% if amigo in user.amigos.all %}
+                        <input type="submit" class="btn btn-outline-red" value="Excluir Amigo" style="margin-bottom: 5px;">
+                        {% elif amigo in usuarios_solicitados %}
+                        <a class="btn btn-outline-dark" style="margin-bottom: 5px;">Pedido de Amizade Enviado</a>
+                        {% else %}
+                        <input type="submit" name="adicionar_amigo" class="btn btn-outline-green" value="Adicionar Amigo" style="margin-bottom: 5px;">
+                        {% endif %}
+                    {% endif %}
+                    <a class="btn btn-outline-dark" href="{% url 'usuario' pk=amigo.id %}" style="margin-bottom: 5px;">Ver Perfil</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
