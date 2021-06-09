@@ -26,21 +26,29 @@ def view_usuario(request, pk):
     usuario = Usuario.objects.get(pk=pk)
 
     if request.method == 'POST':
-        if 'excluir_amigo' in request.POST:
-            request.user.amigos.remove(usuario)
-        elif 'adicionar_amigo' in request.POST:
-            request.user.enviar_pedido_amizade(usuario)
+        if 'session_amigos' in request.POST:
+            amigo = Usuario.objects.get(pk=request.POST.get('id_amigo'))
+            if 'excluir_amigo' in request.POST:
+                request.user.amigos.remove(amigo)
+            elif 'adicionar_amigo' in request.POST:
+                request.user.enviar_pedido_amizade(amigo)
+        else:
+            if 'excluir_amigo' in request.POST:
+                request.user.amigos.remove(usuario)
+            elif 'adicionar_amigo' in request.POST:
+                request.user.enviar_pedido_amizade(usuario)
 
     amigos_comum = [amigo for amigo in usuario.amigos.all() if amigo in request.user.amigos.all()]
     if usuario in request.user.amigos.all():
         context['sao_amigos'] = True
     
-    usuarios_solicidados = [p.user_recebido for p in request.user.user_enviado.filter(aceito=False)]
-    if usuario in usuarios_solicidados:
+    usuarios_solicitados = [p.user_recebido for p in request.user.user_enviado.filter(aceito=False)]
+    if usuario in usuarios_solicitados:
         context['pedido_enviado'] = True
 
     context.update({
         'usuario': usuario,
+        'usuarios_solicitados': usuarios_solicitados,
         'amigos_comum': amigos_comum,
         'count_amigos_comum': len(amigos_comum)
     })
@@ -53,9 +61,16 @@ def amigos(request):
         amigo = Usuario.objects.get(pk=request.POST.get('id_amigo'))
         if 'excluir_amigo' in request.POST:
             request.user.amigos.remove(amigo)
+        elif 'adicionar_amigo' in request.POST:
+            request.user.enviar_pedido_amizade(amigo)
+
+    usuarios_solicidados = [p.user_recebido for p in request.user.user_enviado.filter(aceito=False)]
 
     amigos = request.user.amigos.all().order_by('username')
-    context['amigos'] = amigos
+    context.update({
+        'amigos': amigos,
+        'usuarios_solicidados': usuarios_solicidados,
+    })
     return render(request, 'amigos.html', context)
 
 

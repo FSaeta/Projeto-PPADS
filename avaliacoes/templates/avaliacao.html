@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Banner -->
+<div class="bg-dark" style="padding: 20px;">
+    <div class="container">
+        <div class="text-center text-white">
+            {% if tipo_item == 'filme' %}
+            <h1 style="font-weight:bolder; font-size: 50px;">Avaliação do Filme '{{avaliacao.filme.titulo}}'</h1>
+            {% elif tipo_item == 'livro' %}
+            <h1 style="font-weight:bolder; font-size: 50px;">Avaliação do Livro '{{avaliacao.livro.titulo}}'</h1>
+            {% elif tipo_item == 'serie' %}
+            <h1 style="font-weight:bolder; font-size: 50px;">Avaliação da Série '{{avaliacao.serie.titulo}}'</h1>
+            {% endif %}
+            <p>Avaliação feita por {{avaliacao.user_id.username}}</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

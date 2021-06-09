@@ -32,6 +32,18 @@ class Itens(models.Model):
     def excluir_cadastro(self, user):
         if user.is_superuser:
             self.delete()
+    
+    def get_media_avaliacoes(self):
+        soma = 0
+        qtd = 0
+        for avaliacao in self.avaliacao_set.all():
+            soma += avaliacao.valor
+            qtd += 1
+        if qtd > 0:
+            media = round(soma/qtd)
+            return media
+        return 'Sem Avaliações'
+
 
 class Livro(Itens):
     volume = models.PositiveSmallIntegerField("Volume")

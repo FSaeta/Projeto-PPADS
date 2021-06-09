@@ -16,12 +16,21 @@
             </div>
         </div>
         <div class="card-footer pt-0 border-top-0 bg-transparent">
-            <form action="{% url 'amigos' %}" method="POST">
+            <form action="{% url 'usuario' pk=usuario.id %}" method="POST">
                 {% csrf_token %}
+                <input type="number" value=1 name='session_amigos' style="display: none;">
                 <input type="number" value="{{amigo.id}}" name="id_amigo" style="display: none;">
                 <div class="text-center">
-                    <input type="submit" class="btn btn-outline-red" value="Excluir Amigo" style="margin-bottom: 5px;">
-                    <a class="btn btn-outline-dark" href="{% url 'usuario' pk=amigo.id %}">Ver Perfil</a>
+                    {% if amigo != user %}
+                        {% if amigo in user.amigos.all %}
+                        <input type="submit" class="btn btn-outline-red" value="Excluir Amigo" style="margin-bottom: 5px;">
+                        {% elif amigo in usuarios_solicitados %}
+                        <a class="btn btn-outline-dark" style="margin-bottom: 5px;">Pedido de Amizade Enviado</a>
+                        {% else %}
+                        <input type="submit" name="adicionar_amigo" class="btn btn-outline-green" value="Adicionar Amigo" style="margin-bottom: 5px;">
+                        {% endif %}
+                    {% endif %}
+                    <a class="btn btn-outline-dark" href="{% url 'usuario' pk=amigo.id %}" style="margin-bottom: 5px;">Ver Perfil</a>
                 </div>
             </form>
         </div>

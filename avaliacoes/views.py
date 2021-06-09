@@ -22,6 +22,8 @@ def avaliar_item(request, tipo_item, item_id):
         if form.is_valid():
             form.save()
             context['mensagem_status'] = "Avaliação realizada com sucesso !"
+            avaliacao = Avaliacao.objects.filter(user_id=request.user.id).order_by('-create_date').first()
+            return redirect(f'/avaliacoes/{tipo_item}/{avaliacao.id}')
         else:
             context['erro'] = True
             context['mensagem_status'] = "Algo está errado com o seu cadastro !"
@@ -32,12 +34,16 @@ def avaliar_item(request, tipo_item, item_id):
     })
     return render(request, 'avaliar_item.html', context)
 
-def avaliacao(request, item_id, pk):
+
+def avaliacao(request, tipo_item, pk):
     context = {}
+    if tipo_item not in ('filme', 'livro', 'serie'):
+        return redirect('/')
+    context.update(get_avaliacoes_context(tipo_item))
 
     avaliacao = get_object_or_404(Avaliacao, id=pk)
     context['avaliacao'] = avaliacao
 
-    comentarios = avaliacao.comentarios_set.all()
+    comentarios = avaliacao.comentario_set.all()
 
-    return render(request, 'avaliacoes.html', context)
+    return render(request, 'avaliacao.html', context)

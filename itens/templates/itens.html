@@ -35,8 +35,8 @@
                         </div>
                     </div>
                     <div class="card-footer pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark" href="{% url 'item' tipo_item=item.tipo pk=item.pk %}">Vizualizar</a></div>
-                        <div class="text-center"><a class="btn btn-outline-dark" href="#" style="margin-top:10px;">Avaliar</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark" href="{% url 'item' tipo_item=item.tipo pk=item.pk %}" style="margin-top:10px;">Vizualizar</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark" href="{% url 'avaliar_item' tipo_item=item.tipo item_id=item.id %}" style="margin-top:10px;">Avaliar</a></div>
                     </div>
                 </div>
             </div>

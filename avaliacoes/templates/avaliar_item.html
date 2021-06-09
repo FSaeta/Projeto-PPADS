@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-
 {% block content %}
 <!-- Banner -->
 <div class="bg-dark" style="padding: 20px;">
     <div class="container">
         <div class="text-center text-white">
-            <h1 style="font-weight:bolder; font-size: 50px;">Cadastrar {{item_name}}</h1>
+            <h1 style="font-weight:bolder; font-size: 50px;">Avaliar {{item_name}}</h1>
+            <p>Fazer Avaliação d{% if tipo_item != 'serie' %}o{% else %}a{% endif %} {{item_name}} {{item.titulo}}</p>
         </div>
     </div>
 </div>
@@ -16,14 +16,15 @@
         <p>{{mensagem_status}}</p>
         {% endif %}
         <div class="row justify-content-center" style="text-align:center;">
-            <form method="POST" action="{% url 'cadastrar_item' tipo_item=tipo_item %}" class="cadastro_item_form">
+            <form action="{% url 'avaliar_item' tipo_item=tipo_item item_id=item.id %}" method="post" class="avaliar_item_form cadastro_item_form">
                 {% csrf_token %}
                 {{form.as_p}}
                 <input type="number" class="form-control" name='user_id' id='id_user_id' value="{{user.id}}">
                 <input type="text" class="form-control" name='tipo' id='id_tipo' value="{{tipo_item}}">
-                <input type="submit" class="btn btn-outline-dark" value="Cadastrar" style="background-color: yellowgreen; margin-top: 40px; width: 50%;">
+                <input type="submit" name="avaliar_item" class="btn btn-outline-dark" value="Avaliar" style="background-color: yellowgreen; margin-top: 40px; width: 50%;">
             </form>
         </div>
     </div>
 </section>
+
 {% endblock %}

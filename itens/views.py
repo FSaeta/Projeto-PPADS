@@ -1,8 +1,6 @@
-from itens.forms import CadastroFilme
 from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import *
-from .forms import CadastroFilme, CadastroSerie, CadastroLivro
 from .funcoes import get_itens_context
 
 
@@ -56,9 +54,10 @@ def cadastrar_item(request, tipo_item):
         if form.is_valid():
             form.save()
             context['mensagem_status'] = "Cadastro realizado com sucesso !"
+            return redirect(f'/biblioteca/{tipo_item}/')
         else:
             context['erro'] = True
-            context['mensagem_status'] = "Algo está errado com o seu cadastro !"
+            context['mensagem_status'] = "Algo está errado com o formulário !"
         context['form'] = form
 
     return render(request, 'cadastro_item.html', context)

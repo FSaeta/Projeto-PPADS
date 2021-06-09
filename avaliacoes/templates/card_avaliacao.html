@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="card-footer pt-0 border-top-0 bg-transparent">
-            <form action="{% url 'usuario' pk=usuario.id %}" method="POST">
+            <form action="{% url 'avaliacao' tipo_item=avaliacao.tipo pk=avaliacao.id %}" method="POST">
                 {% csrf_token %}
                 <input type="number" value=1 name='session_amigos' style="display: none;">
                 <input type="number" value="{{amigo.id}}" name="id_amigo" style="display: none;">
@@ -30,7 +30,7 @@
                         <input type="submit" name="adicionar_amigo" class="btn btn-outline-green" value="Adicionar Amigo" style="margin-bottom: 5px;">
                         {% endif %}
                     {% endif %}
-                    <a class="btn btn-outline-dark" href="{% url 'usuario' pk=amigo.id %}" style="margin-bottom: 5px;">Ver Perfil</a>
+                    <a class="btn btn-outline-dark" href="{% url 'avaliacao' tipo_item=avaliacao.tipo pk=avaliacao.id %}" style="margin-bottom: 5px;">Ver Avaliacao</a>
                 </div>
             </form>
         </div>

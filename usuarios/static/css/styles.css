@@ -3602,3 +3602,6 @@ textarea.form-control-lg {
 .cadastro_item_form #id_user_id, .cadastro_item_form #id_tipo {
   display: none;
 }
+.avaliar_item_form #id_filme, .avaliar_item_form #id_serie, .avaliar_item_form #id_livro {
+  display: none;
+}

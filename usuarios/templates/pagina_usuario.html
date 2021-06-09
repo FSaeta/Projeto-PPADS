@@ -72,6 +72,15 @@
             </div>
         </div>
     </div>
+    <section>
+        <div class="container px-4">
+            <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
+                {% for avaliacao in usuario.avaliacao_set.all %}
+                {% include 'card_avaliacao.html' %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 </div>
 
 <!-- Todos Amigos -->
@@ -84,7 +93,7 @@
             </div>
         </div>
     </div>
-    <section class="py-5">
+    <section>
         <div class="container px-4">
             <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
                 {% for amigo in usuario.amigos.all %}
@@ -106,7 +115,7 @@
             </div>
         </div>
     </div>
-    <section class="py-5">
+    <section>
         <div class="container px-4">
             <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
                 {% for amigo in amigos_comum %}
