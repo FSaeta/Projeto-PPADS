@@ -15,32 +15,7 @@
     <div class="container px-4">
         <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
             {% for amigo in amigos %}
-            <div class="col" style="margin: 10px;">
-                <div class="card">
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <h5 class="fw-bolder">{{amigo.username}}</h5>
-                        </div>
-                        <div style="padding-left: 10px;">
-                            <p class="fw-bolder">
-                                Séries cadastradas: {{amigo.serie_set.all.count}}<br>
-                                Filmes cadastrados: {{amigo.filme_set.all.count}}<br>
-                                Livros cadastrados: {{amigo.livro_set.all.count}}<br>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card-footer pt-0 border-top-0 bg-transparent">
-                        <form action="{% url 'amigos' %}" method="POST">
-                            {% csrf_token %}
-                            <input type="number" value="{{amigo.id}}" name="id_amigo" style="display: none;">
-                            <div class="text-center">
-                                <input type="submit" class="btn btn-outline-red" value="Excluir Amigo">
-                                <a class="btn btn-outline-dark" href="{% url 'usuario' pk=amigo.id %}">Ver Perfil</a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            {% include 'card_usuario.html' %}
             {% endfor %}
         </div>
     </div>

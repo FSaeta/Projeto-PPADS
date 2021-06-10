@@ -1,9 +1,8 @@
-from os import access
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView
+from django.contrib.auth import authenticate
 
 from .models import PedidosAmizade, Usuario
-from .forms import UsuarioCreateForm
+from .forms import UsuarioCreateForm, SetPasswordForm, EditarDadosForm
 
 
 def cadastro(request):
@@ -24,6 +23,8 @@ def cadastro(request):
 def view_usuario(request, pk):
     context = {}
     usuario = Usuario.objects.get(pk=pk)
+    if request.user.is_anonymous:
+        return redirect('/login')
 
     if request.method == 'POST':
         if 'session_amigos' in request.POST:
@@ -37,6 +38,17 @@ def view_usuario(request, pk):
                 request.user.amigos.remove(usuario)
             elif 'adicionar_amigo' in request.POST:
                 request.user.enviar_pedido_amizade(usuario)
+            elif 'editar_dados' in request.POST:
+                request.user.atualizar_registro(request.POST)
+                context['mensagem_status'] = "Dados Atualizados !"
+            elif 'alterar_senha' in request.POST:
+                form_alterar_senha = SetPasswordForm(request.user, request.POST)
+                if form_alterar_senha.is_valid():
+                    form_alterar_senha.save()
+                    context['mensagem_status'] = "Senha Alterada !!"
+                    return redirect('/login')
+                else:
+                    context['mensagem_status'] = "As senhas estão incorretas !"
 
     amigos_comum = [amigo for amigo in usuario.amigos.all() if amigo in request.user.amigos.all()]
     if usuario in request.user.amigos.all():
@@ -50,13 +62,17 @@ def view_usuario(request, pk):
         'usuario': usuario,
         'usuarios_solicitados': usuarios_solicitados,
         'amigos_comum': amigos_comum,
-        'count_amigos_comum': len(amigos_comum)
+        'count_amigos_comum': len(amigos_comum),
+        'form_editar_dados': EditarDadosForm(request.user),
+        'form_alterar_senha': SetPasswordForm(request.user),
     })
 
     return render(request, 'pagina_usuario.html', context)
 
 def amigos(request):
     context = {}
+    if request.user.is_anonymous:
+        return redirect('/login')
     if request.method == 'POST':
         amigo = Usuario.objects.get(pk=request.POST.get('id_amigo'))
         if 'excluir_amigo' in request.POST:
@@ -76,6 +92,8 @@ def amigos(request):
 
 def pedidos_amizade(request):
     context = {}
+    if request.user.is_anonymous:
+        return redirect('/login')
     if request.method == 'POST':
         pedido = PedidosAmizade.objects.get(pk=request.POST.get('id_pedido'))
         if 'recusar_pedido' in request.POST:

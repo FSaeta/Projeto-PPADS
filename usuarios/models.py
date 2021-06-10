@@ -56,6 +56,17 @@ class Usuario(AbstractUser):
         amigos = [amigo for amigo in self.amigos.all() if amigo in user.amigos.all()]
         num_amigos = len(amigos)
         return num_amigos
+
+    def get_fields_kwargs(self):
+        return {
+            'username': self.username,
+            'email': self.email,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+            'estado': self.estado,
+            'cidade': self.cidade,
+            'data_nascimento': self.data_nascimento
+        }
     
     def atualizar_registro(self, values):
         for field in values.keys():

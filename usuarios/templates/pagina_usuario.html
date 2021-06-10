@@ -10,18 +10,21 @@
             {% else %}
             <h1 style="font-weight:bolder; font-size: 50px;">Minha Conta</h1><br>
             {% endif %}
-            <a id="btn-avaliacoes" class="btn btn-outline-dark" style="color: white; border-color: white;">Avaliações</a>
-            <a id="btn-todos_amigos" class="btn btn-outline-dark" style="color: white; border-color: white;">Amigos</a>
+            <a id="btn-avaliacoes" href="#Avaliacoes" class="btn btn-outline-dark" style="color: white; border-color: white;">Avaliações</a>
+            <a id="btn-todos_amigos" href="#Amigos" class="btn btn-outline-dark" style="color: white; border-color: white;">Amigos</a>
             {% if usuario != user %}
-            <a id="btn-amigos_comum" class="btn btn-outline-dark" style="color: white; border-color: white;">Amigos em Comum</a>
+            <a id="btn-amigos_comum" href="#AmigosComum" class="btn btn-outline-dark" style="color: white; border-color: white;">Amigos em Comum</a>
             {% else %}
-            <a id="btn-editar_perfil" class="btn btn-outline-dark" style="color: white; border-color: white;">Editar Dados</a>
-            <a id="btn-alterar_senha" class="btn btn-outline-dark" style="color: white; border-color: white;">Alterar Senha</a>
+            <a id="btn-editar_dados" href="#EditarDados" class="btn btn-outline-dark" style="color: white; border-color: white;">Editar Dados</a>
+            <a id="btn-alterar_senha" href="#AlterarSenha" class="btn btn-outline-dark" style="color: white; border-color: white;">Alterar Senha</a>
             {% endif %}
         </div>
     </div>
 </div>
 <div style="margin: 10px auto; width: 70%;">
+    {% if mensagem_status %}
+    <h3 class="text-center">{{mensagem_status}}</h3>
+    {% endif %}
     <div class="card">
         <div class="card-body p-4">
             <div class="text-center">
@@ -64,66 +67,119 @@
 </div>
 
 <!-- Avaliações -->
-<div id='div-avaliacoes' style="display: none;">
-    <div class="bg-dark" style="padding: 20px;">
-        <div class="container">
-            <div class="text-center text-white">
-                <h1 style="font-size: 40px;">Avaliações do Usuário</h1>
+<div id="Avaliacoes">
+    <div id='div-avaliacoes' style="display: none;">
+        <div class="bg-dark" style="padding: 20px;">
+            <div class="container">
+                <div class="text-center text-white">
+                    <h1 style="font-size: 40px;">Avaliações do Usuário</h1>
+                </div>
             </div>
         </div>
+        <section>
+            <div class="container px-4">
+                <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
+                    {% for avaliacao in usuario.avaliacao_set.all %}
+                    {% include 'card_avaliacao.html' %}
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
     </div>
-    <section>
-        <div class="container px-4">
-            <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
-                {% for avaliacao in usuario.avaliacao_set.all %}
-                {% include 'card_avaliacao.html' %}
-                {% endfor %}
-            </div>
-        </div>
-    </section>
 </div>
 
 <!-- Todos Amigos -->
-<div id='div-todos_amigos' style="display: none;">
-    <div class="bg-dark" style="padding: 20px;">
-        <div class="container">
-            <div class="text-center text-white">
-                <h1 style="font-size: 40px;">Amigos do Usuário</h1>
-                <p>{{usuario.amigos.all.count}} Amigo{% if count_amigos_comum != 1 %}s{% endif %}</p>
+<div id="Amigos">
+    <div id='div-todos_amigos' style="display: none;">
+        <div class="bg-dark" style="padding: 20px;">
+            <div class="container">
+                <div class="text-center text-white">
+                    <h1 style="font-size: 40px;">Amigos do Usuário</h1>
+                    <p>{{usuario.amigos.all.count}} Amigo{% if count_amigos_comum != 1 %}s{% endif %}</p>
+                </div>
             </div>
         </div>
+        <section>
+            <div class="container px-4">
+                <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
+                    {% for amigo in usuario.amigos.all %}
+                    {% include 'card_usuario.html' %}
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
     </div>
-    <section>
-        <div class="container px-4">
-            <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
-                {% for amigo in usuario.amigos.all %}
-                {% include 'card_usuario.html' %}
-                {% endfor %}
-            </div>
-        </div>
-    </section>
 </div>
 
 
 <!-- Amigos em Comum -->
-<div id='div-amigos_comum' style="display: none;">
-    <div class="bg-dark" style="padding: 20px;">
-        <div class="container">
-            <div class="text-center text-white">
-                <h1 style="font-size: 40px;">Amigos em Comum</h1>
-                <p>{{count_amigos_comum}} Amigo{% if count_amigos_comum != 1 %}s{% endif %} em Comum</p>
+<div id="AmigosComum">
+    <div id='div-amigos_comum' style="display: none;">
+        <div class="bg-dark" style="padding: 20px;">
+            <div class="container">
+                <div class="text-center text-white">
+                    <h1 style="font-size: 40px;">Amigos em Comum</h1>
+                    <p>{{count_amigos_comum}} Amigo{% if count_amigos_comum != 1 %}s{% endif %} em Comum</p>
+                </div>
             </div>
         </div>
+        <section>
+            <div class="container px-4">
+                <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
+                    {% for amigo in amigos_comum %}
+                    {% include 'card_usuario.html' %}
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
     </div>
-    <section>
-        <div class="container px-4">
-            <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
-                {% for amigo in amigos_comum %}
-                {% include 'card_usuario.html' %}
-                {% endfor %}
-            </div>
-        </div>
-    </section>
 </div>
 
+<!-- Editar Dados -->
+<div id="EditarDados">
+    <div id='div-editar_dados' style="display: none;">
+        {% if usuario == user %}
+        <div class="bg-dark" style="padding: 20px;">
+            <div class="container">
+                <div class="text-center text-white"><h1>Editar Dados</h1></div>
+            </div>
+        </div>
+        <section>
+            <div class="container px-4" style="padding-top: 30px;">
+                <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
+                    <form method="POST" action="{% url 'usuario' pk=usuario.pk %}" class="cadastro_item_form">
+                        {% csrf_token %}
+                        {{form_editar_dados.as_p}}
+                        <input type="submit" name="editar_dados" class="btn btn-outline-dark" value="Confirmar" style="background-color: yellowgreen; margin-top: 40px; width: 50%;">
+                    </form>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Alterar Senha -->
+<div id="AlterarSenha">
+    <div id='div-alterar_senha' style="display: none;">
+        {% if usuario == user %}
+        <div class="bg-dark" style="padding: 20px;">
+            <div class="container">
+                <div class="text-center text-white"><h1>Alterar Senha</h1></div>
+            </div>
+        </div>
+        <section>
+            <div class="container px-4" style="padding-top: 30px;">
+                <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
+                    <form method="POST" action="{% url 'usuario' pk=usuario.pk %}" class="cadastro_item_form">
+                        {% csrf_token %}
+                        {{form_alterar_senha.as_p}}
+                        <input type="submit" name="alterar_senha" class="btn btn-outline-dark" value="Confirmar" style="background-color: yellowgreen; margin-top: 40px; width: 50%;">
+                    </form>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
