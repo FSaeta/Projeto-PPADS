@@ -10,11 +10,49 @@
                 </div>
             </div>
         </div>
-        <!-- Section-->
-        <section class="py-5">
+        
+        <!-- Bibloteca -->
+        <div class="bg-light" style="padding: 30px 0px;">
+            <div class="container">
+                <div class="text-center">
+                    <h1 style="font-weight:bolder; font-size: 50px;">Biblioteca</h1>
+                </div>
+            </div>
+        </div>
+        <section>
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
-                    
+
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="text-center" style="padding: 40px 40px;">
+                                    <a id="btn-avaliacoes" href="{% url 'itens' tipo_item='filme' %}" class="btn btn-outline-dark">Filmes</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="text-center" style="padding: 40px 40px;">
+                                    <a id="btn-avaliacoes" href="{% url 'itens' tipo_item='livro' %}" class="btn btn-outline-dark">Livros</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="text-center" style="padding: 40px 40px;">
+                                    <a id="btn-avaliacoes" href="{% url 'itens' tipo_item='serie' %}" class="btn btn-outline-dark">Séries</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
