@@ -37,16 +37,20 @@ class Avaliacao(models.Model):
         verbose_name_plural = "Avaliações"
     
     def curtir(self, user_id):
-        like = LikeAvaliacao(user_id=user_id, comentario=self)
+        like = LikeAvaliacao(user_id=user_id, avaliacao=self)
         self.likes_cont += 1
         like.save()
         self.save()
 
     def descurtir(self, user_id):
-        like = LikeComentario.objects.get(user_id=user_id)
+        like = LikeAvaliacao.objects.get(user_id=user_id, avaliacao=self)
         self.likes_cont -= 1
         like.delete()
         self.save()
+    
+    def get_liked_users(self):
+        users = [like.user_id for like in self.likeavaliacao_set.all()]
+        return users
 
 class Comentario(models.Model):
     data_criacao = models.DateTimeField(auto_now=True)
@@ -77,6 +81,7 @@ class LikeAvaliacao(models.Model):
     class Meta:
         verbose_name = 'Like'
         verbose_name_plural = 'Likes'
+        unique_together = ('user_id', 'avaliacao')
 
 class LikeComentario(models.Model):
     user_id = models.ForeignKey(Usuario, on_delete=models.CASCADE, verbose_name="user_id", blank=True)

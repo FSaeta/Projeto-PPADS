@@ -43,7 +43,31 @@ def avaliacao(request, tipo_item, pk):
 
     avaliacao = get_object_or_404(Avaliacao, id=pk)
     context['avaliacao'] = avaliacao
+    form_comentario = context['classe_form_comentario'](avaliacao, request.user)
 
-    comentarios = avaliacao.comentario_set.all()
+    if request.method == 'POST':
+        if 'curtir_avaliacao' in request.POST:
+            avaliacao.curtir(request.user)
+        elif 'descurtir_avaliacao' in request.POST:
+            avaliacao.descurtir(request.user)
+        elif 'comentar' in request.POST:
+            form_comentario = context['classe_form_comentario'](avaliacao, request.user, request.POST)
+            if form_comentario.is_valid():
+                form_comentario.save()
+
+        if 'from_card' in request.POST and 'single' not in request.POST:
+            if 'usuario' in request.POST.get('redirect_url'):
+                return redirect(request.POST.get('redirect_url')+'#Avaliacoes')
+            elif 'biblioteca' in request.POST.get('redirect_url'):
+                return redirect(request.POST.get('redirect_url')+'#Avaliacoes')
+
+    comentarios = avaliacao.comentario_set.all().order_by('-data_criacao')
+
+    context.update({
+        'avaliacoes': Avaliacao.objects.filter(pk=avaliacao.pk).order_by('-likes_cont'),
+        'single': True,
+        'form_comentario': form_comentario,
+        'comentarios':comentarios,
+    })
 
     return render(request, 'avaliacao.html', context)

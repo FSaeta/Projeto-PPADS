@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-body" style="padding: 15px; padding-top: 25px;">
             <div class="text-center">
-                <h5 class="fw-bolder">{{avaliacao.tipo.capitalize}}<br>
+                <h5 class="fw-bolder">{{comentario.tipo.capitalize}}<br>
                 {% if avaliacao.tipo == 'filme' %}
                 {{avaliacao.filme.titulo}}<br><br>
                 {% elif avaliacao.tipo == 'livro' %}
@@ -13,10 +13,9 @@
                 Nota: {{avaliacao.valor}}</h5>
             </div>
             <div style="padding: 10px 0px 0px 10px;">
-                <h5 class="fw-bolder">Comentário:</h5>
-                <p class="fw">
-                    {{avaliacao.avaliacao}}
-                </p>
+                
+                <p><span style="font-weight:bolder; font-size: 25px;">Comentario: </span>
+                Comentário feito por <a href="{% url 'usuario' pk=comentario.user_id.pk %}" style="color: white;">{{comentario.user_id.username}}</a></p>
             </div>
             <div style="padding: 10px 0px 0px 10px;">
                 <h5 class="fw-bolder">Curtidas: {{avaliacao.likes_cont}}</h5>
@@ -24,7 +23,6 @@
             </div>
         </div>
         <div class="card-footer pt-0 border-top-0 bg-transparent">
-            <p>Avaliação feita por <a href="{% url 'usuario' pk=avaliacao.user_id.pk %}" style="color: black;">{{avaliacao.user_id.username}}</a></p>
             <form action="{% url 'avaliacao' tipo_item=avaliacao.tipo pk=avaliacao.id %}" method="POST">
                 {% csrf_token %}
                 <input type="number" value=1 name='session_amigos' style="display: none;">
@@ -49,7 +47,7 @@
 
                     {% if not single %}
                     <a class="btn btn-outline-dark" href="{% url 'avaliacao' tipo_item=avaliacao.tipo pk=avaliacao.id %}" style="margin-bottom: 5px;">Ver Avaliacao</a>
-                    <a id="btn-comentar" href="{% url 'avaliacao' tipo_item=avaliacao.tipo pk=avaliacao.id %}" class="btn btn-outline-green" style="margin-bottom: 5px;">Comentar</a>
+                    <input type="submit" name="curtir_avaliacao" class="btn btn-outline-green" value="Comentar" style="margin-bottom: 5px;">
                     {% else %}
                     <a id="btn-comentar" href="#Comentar" class="btn btn-outline-green" style="margin-bottom: 5px;">Comentar</a>
                     <input type="text" value="true" name="single" style="display: none;">
