@@ -26,8 +26,8 @@ if __name__ == '__main__':
 
 def get_users_context(request):
     usuarios_solicitados = [p.user_recebido for p in request.user.user_enviado.filter(aceito=False)]
-    usuarios_enviados = [p.user_enviado for p in request.user.user_enviado.filter(aceito=False)]
-    
+    usuarios_enviados = [p.user_enviado for p in request.user.user_recebido.filter(aceito=False)]
+
     values = {
         'buscando': False,
         'usuarios_solicitados': usuarios_solicitados,

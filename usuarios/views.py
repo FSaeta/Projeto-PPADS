@@ -86,6 +86,13 @@ def amigos(request):
             request.user.amigos.remove(amigo)
         elif 'adicionar_amigo' in request.POST:
             request.user.enviar_pedido_amizade(amigo)
+        elif 'aceitar_amigo' in request.POST:
+            pedido = PedidosAmizade.objects.get(user_enviado=amigo, user_recebido=request.user, aceito=False)
+            pedido.aceitar_pedido()
+        elif 'recusar_amigo' in request.POST:
+            pedido = PedidosAmizade.objects.get(user_enviado=amigo, user_recebido=request.user, aceito=False)
+            pedido.recusar_pedido()
+
     elif request.method == 'GET':
         if 'buscar' in request.GET:
             busca = request.GET.get('busca', False)

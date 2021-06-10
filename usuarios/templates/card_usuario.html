@@ -31,7 +31,8 @@
                         {% elif amigo in usuarios_solicitados %}
                         <a class="btn btn-outline-dark" style="margin-bottom: 5px;">Pedido de Amizade Enviado</a>
                         {% elif amigo in usuarios_enviados %}
-                        <input type="submit" name="aceitar_amigo" class="btn btn-outline-green" value="Aceitar Amigo" style="margin-bottom: 5px;">
+                        <input type="submit" name="aceitar_amigo" class="btn btn-outline-green" value="Aceitar Pedido de Amizade" style="margin-bottom: 5px;">
+                        <input type="submit" name="recusar_amigo" class="btn btn-outline-red" value="Recusar Pedido de Amizade" style="margin-bottom: 5px;">
                         {% else %}
                         <input type="submit" name="adicionar_amigo" class="btn btn-outline-green" value="Adicionar Amigo" style="margin-bottom: 5px;">
                         {% endif %}
