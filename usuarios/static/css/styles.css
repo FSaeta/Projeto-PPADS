@@ -3610,3 +3610,6 @@ textarea.form-control-lg {
 .avaliar_item_form #id_filme, .avaliar_item_form #id_serie, .avaliar_item_form #id_livro {
   display: none;
 }
+.cadastro_item_form #id_comentario{
+  max-height: 110px;
+}

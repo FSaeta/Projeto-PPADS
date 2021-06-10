@@ -8,6 +8,13 @@
             <h1 style="font-weight:bolder; font-size: 50px;">Amigos ({{amigos.count}})</h1><br>
             <a class="btn btn-outline-dark" href="{% url 'pedidos_amizade' %}" style="color: white; border-color: white;">Ver Pedidos de Amizade</a>
         </div>
+        <div class="row text-center text-white" style="padding-top: 20px;">
+            <form method="GET" action="{% url 'amigos' %}">
+                <label for="busca">Buscar Usuário: </label><br>
+                <input type="text" name="busca" style="width: 60%;" {% if valor_busca %}value="{{valor_busca}}" {% endif %} style="display: flex;"/>
+                <button class="btn btn-outline-dark" type="submit" name="buscar" style="color: white; border-color: white; padding: 0px 5px;"><i class="bi-search" style="font-size: 18px;"></i></button> 
+            </form>
+        </div>
     </div>
 </div>
 

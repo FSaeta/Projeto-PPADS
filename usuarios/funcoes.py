@@ -23,3 +23,15 @@ ESTADOS = choice_estados()
 if __name__ == '__main__':
     print(ESTADOS)
     print(CIDADES)
+
+def get_users_context(request):
+    usuarios_solicitados = [p.user_recebido for p in request.user.user_enviado.filter(aceito=False)]
+    usuarios_enviados = [p.user_enviado for p in request.user.user_enviado.filter(aceito=False)]
+    
+    values = {
+        'buscando': False,
+        'usuarios_solicitados': usuarios_solicitados,
+        'usuarios_enviados': usuarios_enviados,
+    }
+    return values
+

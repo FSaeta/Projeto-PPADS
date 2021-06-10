@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate
 
 from .models import PedidosAmizade, Usuario
 from .forms import UsuarioCreateForm, SetPasswordForm, EditarDadosForm
+
+from avaliacoes.models import Avaliacao
+
+from .funcoes import get_users_context
 
 
 def cadastro(request):
@@ -25,6 +28,7 @@ def view_usuario(request, pk):
     usuario = Usuario.objects.get(pk=pk)
     if request.user.is_anonymous:
         return redirect('/login')
+    context.update(get_users_context(request))
 
     if request.method == 'POST':
         if 'session_amigos' in request.POST:
@@ -53,18 +57,17 @@ def view_usuario(request, pk):
     amigos_comum = [amigo for amigo in usuario.amigos.all() if amigo in request.user.amigos.all()]
     if usuario in request.user.amigos.all():
         context['sao_amigos'] = True
-    
-    usuarios_solicitados = [p.user_recebido for p in request.user.user_enviado.filter(aceito=False)]
-    if usuario in usuarios_solicitados:
+
+    if usuario in context['usuarios_solicitados']:
         context['pedido_enviado'] = True
 
     context.update({
         'usuario': usuario,
-        'usuarios_solicitados': usuarios_solicitados,
         'amigos_comum': amigos_comum,
-        'count_amigos_comum': len(amigos_comum),
         'form_editar_dados': EditarDadosForm(request.user),
         'form_alterar_senha': SetPasswordForm(request.user),
+        'count_amigos_comum': len(amigos_comum),
+        'avaliacoes': Avaliacao.objects.filter(user_id=usuario).order_by('-likes_cont'),
     })
 
     return render(request, 'pagina_usuario.html', context)
@@ -73,19 +76,29 @@ def amigos(request):
     context = {}
     if request.user.is_anonymous:
         return redirect('/login')
+    context.update(get_users_context(request))
+
+    if request.user.is_anonymous:
+        return redirect('/login')
     if request.method == 'POST':
         amigo = Usuario.objects.get(pk=request.POST.get('id_amigo'))
         if 'excluir_amigo' in request.POST:
             request.user.amigos.remove(amigo)
         elif 'adicionar_amigo' in request.POST:
             request.user.enviar_pedido_amizade(amigo)
+    elif request.method == 'GET':
+        if 'buscar' in request.GET:
+            busca = request.GET.get('busca', False)
+            if busca:
+                context['buscando'] = True
+                context['valor_busca'] = busca
+                amigos = Usuario.objects.filter(username__icontains=busca).order_by('username')
 
-    usuarios_solicidados = [p.user_recebido for p in request.user.user_enviado.filter(aceito=False)]
-
-    amigos = request.user.amigos.all().order_by('username')
+    if not context['buscando']:
+        amigos = request.user.amigos.all().order_by('username')
+    
     context.update({
         'amigos': amigos,
-        'usuarios_solicidados': usuarios_solicidados,
     })
     return render(request, 'amigos.html', context)
 
@@ -94,6 +107,8 @@ def pedidos_amizade(request):
     context = {}
     if request.user.is_anonymous:
         return redirect('/login')
+    context.update(get_users_context(request))
+
     if request.method == 'POST':
         pedido = PedidosAmizade.objects.get(pk=request.POST.get('id_pedido'))
         if 'recusar_pedido' in request.POST:

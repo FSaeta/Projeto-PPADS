@@ -54,8 +54,10 @@
                 <div class="text-center">
                     {% if sao_amigos %}
                     <input type="submit" name="excluir_amigo" class="btn btn-outline-red" value="Excluir Amigo">
-                    {% elif pedido_enviado %}
+                    {% elif usuario in usuarios_solicitados %}
                     <a class="btn btn-outline-dark">Pedido de Amizade Enviado</a>
+                    {% elif usuario in usuarios_enviados %}
+                    <input type="submit" name="aceitar_pedido" class="btn btn-outline-green" value="Aceitar Amigo">
                     {% else %}
                     <input type="submit" name="adicionar_amigo" class="btn btn-outline-green" value="Adicionar Amigo">
                     {% endif %}
@@ -79,7 +81,7 @@
         <section>
             <div class="container px-4">
                 <div class="row row-cols-2 row-cols-xl-4 justify-content-center">
-                    {% for avaliacao in usuario.avaliacao_set.all %}
+                    {% for avaliacao in avaliacoes %}
                     {% include 'card_avaliacao.html' %}
                     {% endfor %}
                 </div>
