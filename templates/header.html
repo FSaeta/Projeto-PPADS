@@ -25,17 +25,22 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi-gear-fill" style="font-size: 30px;"></i></a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{% url 'usuario' pk=user.id %}">Minha Conta</a></li>
-                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-                        {% if user.is_superuser %}
-                            <li><hr class="dropdown-divider" /></li>
-                            {% if tipo_item %}
-                            <li><a class="dropdown-item" href="{% url 'validar_cadastros' tipo_item=tipo_item %}">Validar Cadastros</a></li>
-                            {% else %}
-                            <li><a class="dropdown-item" href="{% url 'validar_cadastros' tipo_item='filme' %}">Validar Cadastros</a></li>
+                        {% if user.is_authenticated %}
+                            <li><a class="dropdown-item" href="{% url 'usuario' pk=user.id %}">Minha Conta</a></li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                            {% if user.is_superuser %}
+                                <li><hr class="dropdown-divider" /></li>
+                                {% if tipo_item %}
+                                <li><a class="dropdown-item" href="{% url 'validar_cadastros' tipo_item=tipo_item %}">Validar Cadastros</a></li>
+                                {% else %}
+                                <li><a class="dropdown-item" href="{% url 'validar_cadastros' tipo_item='filme' %}">Validar Cadastros</a></li>
+                                {% endif %}
+                                <li><a class="dropdown-item" href="#!">Relatórios</a></li>
+                                <li><a class="dropdown-item" href="/admin">Admin</a></li>
                             {% endif %}
-                            <li><a class="dropdown-item" href="#!">Relatórios</a></li>
-                            <li><a class="dropdown-item" href="/admin">Admin</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'login' %}">Fazer Login</a></li>
+                            <li><a class="dropdown-item" href="{% url 'cadastro' %}">Cadastrar-se</a></li>
                         {% endif %}
                     </ul>
                 </li>
