@@ -46,7 +46,7 @@ class NovoComentario(forms.ModelForm):
     class Meta:
         model = Comentario
         fields = ['avaliacao', 'comentario', 'user_id']
-        labels = {'comentario': 'Comentário'}
+        labels = {'comentario': 'Novo Comentário'}
         
     def __init__(self, avaliacao, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
