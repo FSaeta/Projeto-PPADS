@@ -51,7 +51,6 @@
                     <a class="btn btn-outline-dark" href="{% url 'avaliacao' tipo_item=avaliacao.tipo pk=avaliacao.id %}" style="margin-bottom: 5px;">Ver Avaliacao</a>
                     <a id="btn-comentar" href="{% url 'avaliacao' tipo_item=avaliacao.tipo pk=avaliacao.id %}" class="btn btn-outline-green" style="margin-bottom: 5px;">Comentar</a>
                     {% else %}
-                    <a id="btn-comentar" href="#Comentar" class="btn btn-outline-green" style="margin-bottom: 5px;">Comentar</a>
                     <input type="text" value="true" name="single" style="display: none;">
                     {% endif %}
                 </div>

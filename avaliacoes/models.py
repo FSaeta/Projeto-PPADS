@@ -65,13 +65,17 @@ class Comentario(models.Model):
     def descurtir(self, user_id):
         like = LikeComentario.objects.get(user_id=user_id)
         like.delete()
+    
+    def get_liked_users(self):
+        users = [like.user_id for like in self.likecomentario_set.all()]
+        return users
 
     class Meta:
         verbose_name = "Comentário"
         verbose_name_plural = "Comentários"
     
     def __str__(self):
-        return f"{self.pk}- {self.texto}"
+        return f"{self.pk}- {self.comentario}"
 
 
 class LikeAvaliacao(models.Model):
