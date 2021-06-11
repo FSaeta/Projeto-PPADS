@@ -1,4 +1,4 @@
-from .models import Avaliacao
+from .models import Avaliacao, Comentario
 from django.shortcuts import render, get_object_or_404, redirect
 from .funcoes import get_avaliacoes_context
 
@@ -54,6 +54,13 @@ def avaliacao(request, tipo_item, pk):
             form_comentario = context['classe_form_comentario'](avaliacao, request.user, request.POST)
             if form_comentario.is_valid():
                 form_comentario.save()
+
+        elif 'session_comentario' in request.POST:
+            comentario = Comentario.objects.get(pk=request.POST.get('id_comentario'))
+            if 'curtir_comentario' in request.POST:
+                comentario.curtir(request.user)
+            elif 'descurtir_comentario' in request.POST:
+                comentario.descurtir(request.user)
 
         if 'from_card' in request.POST and 'single' not in request.POST:
             if 'usuario' in request.POST.get('redirect_url'):

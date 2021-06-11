@@ -2,58 +2,32 @@
     <div class="card">
         <div class="card-body" style="padding: 15px; padding-top: 25px;">
             <div class="text-center">
-                <h5 class="fw-bolder">{{comentario.tipo.capitalize}}<br>
-                {% if avaliacao.tipo == 'filme' %}
-                {{avaliacao.filme.titulo}}<br><br>
-                {% elif avaliacao.tipo == 'livro' %}
-                {{avaliacao.livro.titulo}}<br><br>
-                {% elif avaliacao.tipo == 'serie' %}
-                {{avaliacao.serie.titulo}}<br><br>
-                {% endif %}
-                Nota: {{avaliacao.valor}}</h5>
+
             </div>
             <div style="padding: 10px 0px 0px 10px;">
                 
-                <p><span style="font-weight:bolder; font-size: 25px;">Comentario: </span>
-                Comentário feito por <a href="{% url 'usuario' pk=comentario.user_id.pk %}" style="color: white;">{{comentario.user_id.username}}</a></p>
+                <p><span style="font-weight:bolder; font-size: 20px;">Comentario: </span>
+                    {{comentario.comentario}}
+                </p>
             </div>
-            <div style="padding: 10px 0px 0px 10px;">
-                <h5 class="fw-bolder">Curtidas: {{avaliacao.likes_cont}}</h5>
-                <h5 class="fw-bolder">Comentarios: {{avaliacao.comentario_set.count}}</h5>
+            <div style="padding: 0px 0px 0px 10px; display: inline-flex;">
+                <p>{{comentario.likecomentario_set.count}} Curtidas</p>
             </div>
-        </div>
-        <div class="card-footer pt-0 border-top-0 bg-transparent">
-            <form action="{% url 'avaliacao' tipo_item=avaliacao.tipo pk=avaliacao.id %}" method="POST">
-                {% csrf_token %}
-                <input type="number" value=1 name='session_amigos' style="display: none;">
-                <input type="number" value="{{amigo.id}}" name="id_amigo" style="display: none;">
-                <input type="text" value="{{request.get_full_path}}" name="redirect_url" style="display: none;">
-                <input type="text" value="true" name="from_card" style="display: none;">
-                <div class="text-center">
-                    
-                    {% if avaliacao.tipo == 'filme' %}
-                    <a class="btn btn-outline-dark" href="{% url 'item' tipo_item=avaliacao.tipo pk=avaliacao.filme.id %}" style="margin-bottom: 5px;">Ver {{avaliacao.tipo.capitalize}}</a>
-                    {% elif avaliacao.tipo == 'livro' %}
-                    <a class="btn btn-outline-dark" href="{% url 'item' tipo_item=avaliacao.tipo pk=avaliacao.livro.id %}" style="margin-bottom: 5px;">Ver {{avaliacao.tipo.capitalize}}</a>
-                    {% elif avaliacao.tipo == 'serie' %}
-                    <a class="btn btn-outline-dark" href="{% url 'item' tipo_item=avaliacao.tipo pk=avaliacao.serie.id %}" style="margin-bottom: 5px;">Ver {{avaliacao.tipo.capitalize}}</a>
-                    {% endif %}
-
-                    {% if user in avaliacao.get_liked_users %}
-                    <button type="submit" name="descurtir_avaliacao" class="btn btn-outline-red" style="margin-bottom: 5px;">Descurtir <i class="fa fa-thumbs-down"></i></button>
+            <div style="padding: 10px 0px 0px 20px; display: inline-flex;">
+                <p>Comentário feito por <a href="{% url 'usuario' pk=comentario.user_id.pk %}">{{comentario.user_id.username}}</a></p>
+            </div>
+            <div style="padding: 10px 0px 0px 20px; display: inline-flex; float: right;">
+                <form action="{% url 'avaliacao' tipo_item=avaliacao.tipo pk=avaliacao.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="text" value='1' name='session_comentario' style="display: none;">
+                    <input type="number" value="{{comentario.id}}" name="id_comentario" style="display: none;">
+                    {% if user in comentario.get_liked_users %}
+                    <button type="submit" name="descurtir_comentario" class="btn btn-outline-red" style="margin-bottom: 5px;">Descurtir <i class="fa fa-thumbs-down"></i></button>
                     {% else %}
-                    <button type="submit" name="curtir_avaliacao" class="btn btn-outline-green" style="margin-bottom: 5px;">Curtir <i class="fa fa-thumbs-up"></i></button>
+                    <button type="submit" name="curtir_comentario" class="btn btn-outline-green" style="margin-bottom: 5px;">Curtir <i class="fa fa-thumbs-up"></i></button>
                     {% endif %}
-
-                    {% if not single %}
-                    <a class="btn btn-outline-dark" href="{% url 'avaliacao' tipo_item=avaliacao.tipo pk=avaliacao.id %}" style="margin-bottom: 5px;">Ver Avaliacao</a>
-                    <input type="submit" name="curtir_avaliacao" class="btn btn-outline-green" value="Comentar" style="margin-bottom: 5px;">
-                    {% else %}
-                    <a id="btn-comentar" href="#Comentar" class="btn btn-outline-green" style="margin-bottom: 5px;">Comentar</a>
-                    <input type="text" value="true" name="single" style="display: none;">
-                    {% endif %}
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>
