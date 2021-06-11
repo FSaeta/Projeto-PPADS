@@ -127,3 +127,77 @@ def pedidos_amizade(request):
     context['pedidos'] = pedidos
 
     return render(request, 'pedidos_amizade.html', context)
+
+# Relatórios
+def get_num_medio_amigos():
+    total_users = Usuario.objects.all().count()
+    total_amigos = 0
+    for user in Usuario.objects.all():
+        total_amigos += user.amigos.all().count()
+    media = total_amigos / total_users
+    return media
+
+class ItemRelatorioMaisConectado():
+
+    def __init__(self, pos, user, q_amigos):
+        self.pos = pos
+        self.user = user
+        self.qtd_amg = q_amigos
+
+class RelatorioMaisConectados():
+
+    def __init__(self):
+        kw = self.get_membros_mais_conectados()
+        if len(kw.keys()) >= 1:
+            self.um     = ItemRelatorioMaisConectado(1, kw['1']['user'], kw['1']['num_amigos'])
+        if len(kw.keys()) >= 2:
+            self.dois   = ItemRelatorioMaisConectado(2, kw['2']['user'], kw['2']['num_amigos'])
+        if len(kw.keys()) >= 3:
+            self.tres   = ItemRelatorioMaisConectado(3, kw['3']['user'], kw['3']['num_amigos'])
+        if len(kw.keys()) >= 4:
+            self.quatro = ItemRelatorioMaisConectado(4, kw['4']['user'], kw['4']['num_amigos'])
+        if len(kw.keys()) >= 5:
+            self.cinco  = ItemRelatorioMaisConectado(5, kw['5']['user'], kw['5']['num_amigos'])
+        if len(kw.keys()) >= 6:
+            self.seis   = ItemRelatorioMaisConectado(6, kw['6']['user'], kw['6']['num_amigos'])
+        if len(kw.keys()) >= 7:
+            self.sete   = ItemRelatorioMaisConectado(7, kw['7']['user'], kw['7']['num_amigos'])
+        if len(kw.keys()) >= 8:
+            self.oito   = ItemRelatorioMaisConectado(8, kw['8']['user'], kw['8']['num_amigos'])
+        if len(kw.keys()) >= 9:
+            self.nove   = ItemRelatorioMaisConectado(9, kw['9']['user'], kw['9']['num_amigos'])
+        if len(kw.keys()) >= 10:
+            self.dez   = ItemRelatorioMaisConectado(10,kw['10']['user'], kw['10']['num_amigos'])
+
+    def get_membros_mais_conectados(self):
+        membros = [user for user in Usuario.objects.all()]
+        mais_conectados = {}
+        if len(membros) < 10:
+            x = len(membros)
+        else:
+            x = 10
+
+        for n in range(0,x):
+            maior = 0
+            maior_user = None
+            for membro in membros:
+                if membro.amigos.all().count() >= maior:
+                    maior = membro.amigos.all().count()
+                    maior_user = membro
+            mais_conectados.update({str(n+1): {'user': maior_user, 'num_amigos': maior}})
+            membros.remove(maior_user)
+        return mais_conectados
+
+
+def relatorios(request):
+    context = {}
+    if not request.user.is_superuser:
+        return redirect('/')
+    num_medio_amigos = get_num_medio_amigos()
+    mais_conectados = RelatorioMaisConectados()
+
+    context.update({
+        'num_medio_amigos': num_medio_amigos,
+        'mais_conectados': mais_conectados,
+    })
+    return render(request, 'relatorios.html', context)

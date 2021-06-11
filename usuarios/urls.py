@@ -6,4 +6,5 @@ urlpatterns = [
     path('<int:pk>', view_usuario, name='usuario'),
     path('amigos', amigos, name='amigos'),
     path('pedidos-amizade', pedidos_amizade, name='pedidos_amizade'),
+    path('relatorios', relatorios, name='relatorios'),
 ]

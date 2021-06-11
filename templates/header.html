@@ -35,7 +35,7 @@
                                 {% else %}
                                 <li><a class="dropdown-item" href="{% url 'validar_cadastros' tipo_item='filme' %}">Validar Cadastros</a></li>
                                 {% endif %}
-                                <li><a class="dropdown-item" href="#!">Relatórios</a></li>
+                                <li><a class="dropdown-item" href="{% url 'relatorios' %}">Relatórios</a></li>
                                 <li><a class="dropdown-item" href="/admin">Admin</a></li>
                             {% endif %}
                         {% else %}
