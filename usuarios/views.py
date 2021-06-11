@@ -135,7 +135,14 @@ def get_num_medio_amigos():
     for user in Usuario.objects.all():
         total_amigos += user.amigos.all().count()
     media = total_amigos / total_users
-    return media
+    return {'media': media, 'amigos':total_amigos}
+
+class RelatorioMediaAmigos():
+    def __init__(self):
+        values = get_num_medio_amigos()
+        self.total_users = Usuario.objects.all().count()
+        self.media = values['media']
+        self.total_amigos = values['amigos']
 
 class ItemRelatorioMaisConectado():
 
@@ -152,23 +159,41 @@ class RelatorioMaisConectados():
             self.um     = ItemRelatorioMaisConectado(1, kw['1']['user'], kw['1']['num_amigos'])
         if len(kw.keys()) >= 2:
             self.dois   = ItemRelatorioMaisConectado(2, kw['2']['user'], kw['2']['num_amigos'])
+        else:
+            self.dois = None
         if len(kw.keys()) >= 3:
             self.tres   = ItemRelatorioMaisConectado(3, kw['3']['user'], kw['3']['num_amigos'])
+        else:
+            self.tres = None
         if len(kw.keys()) >= 4:
             self.quatro = ItemRelatorioMaisConectado(4, kw['4']['user'], kw['4']['num_amigos'])
+        else:
+            self.quatro = None
         if len(kw.keys()) >= 5:
             self.cinco  = ItemRelatorioMaisConectado(5, kw['5']['user'], kw['5']['num_amigos'])
+        else:
+            self.cinco = None
         if len(kw.keys()) >= 6:
             self.seis   = ItemRelatorioMaisConectado(6, kw['6']['user'], kw['6']['num_amigos'])
+        else:
+            self.seis = None
         if len(kw.keys()) >= 7:
             self.sete   = ItemRelatorioMaisConectado(7, kw['7']['user'], kw['7']['num_amigos'])
+        else:
+            self.sete = None
         if len(kw.keys()) >= 8:
             self.oito   = ItemRelatorioMaisConectado(8, kw['8']['user'], kw['8']['num_amigos'])
+        else:
+            self.oito = None
         if len(kw.keys()) >= 9:
             self.nove   = ItemRelatorioMaisConectado(9, kw['9']['user'], kw['9']['num_amigos'])
+        else:
+            self.nove = None
         if len(kw.keys()) >= 10:
             self.dez   = ItemRelatorioMaisConectado(10,kw['10']['user'], kw['10']['num_amigos'])
-
+        else:
+            self.dez = None
+        
     def get_membros_mais_conectados(self):
         membros = [user for user in Usuario.objects.all()]
         mais_conectados = {}
@@ -187,17 +212,25 @@ class RelatorioMaisConectados():
             mais_conectados.update({str(n+1): {'user': maior_user, 'num_amigos': maior}})
             membros.remove(maior_user)
         return mais_conectados
-
+    
+    def gerar_relatorio(self):
+        fields = [self.um,self.dois,self.tres,self.quatro,self.cinco,self.seis,self.sete,self.oito,self.nove,self.dez]
+        iter_fields = []
+        for field in fields:
+            if field:
+                iter_fields.append(field)
+        return iter_fields
 
 def relatorios(request):
     context = {}
     if not request.user.is_superuser:
         return redirect('/')
-    num_medio_amigos = get_num_medio_amigos()
+    num_medio_amigos = RelatorioMediaAmigos()
     mais_conectados = RelatorioMaisConectados()
 
     context.update({
-        'num_medio_amigos': num_medio_amigos,
-        'mais_conectados': mais_conectados,
+        'rel_media_amigos': num_medio_amigos,
+        'rel_mais_conectados': mais_conectados,
     })
     return render(request, 'relatorios.html', context)
+

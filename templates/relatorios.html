@@ -6,9 +6,60 @@
     <div class="container">
         <div class="text-center text-white">
             <h1 style="font-weight:bolder; font-size: 50px;">Relatórios</h1><br>
-            <a id="btn-rel-media-amg" href="#MediaAmigos" class="btn btn-outline-dark" style="color: white; border-color: white;">Usuários Mais Conectados</a>
-            <a id="btn-rel-conectados" href="#MaisConectados" class="btn btn-outline-dark" style="color: white; border-color: white;">Média de Amigos</a>
+            <a id="btn-rel-media-amg" href="{% url 'relatorios' %}#MediaAmigos" class="btn btn-outline-dark" style="color: white; border-color: white;">Média de Amigos</a>
+            <a id="btn-rel-conectados" href="{% url 'relatorios' %}#MaisConectados" class="btn btn-outline-dark" style="color: white; border-color: white;">Usuários Mais Conectados</a>
         </div>
     </div>
+</div>
+
+<!-- Relatório média de amigos -->
+<div id="#MediaAmigos">
+    <div class="bg-dark" style="padding: 20px; margin-top: 15px;">
+        <div class="container">
+            <div class="text-center text-white">
+                <h1 style="font-weight:bolder; font-size: 25px;">Relatório Média de Amigos por Usuário</h1><br>
+            </div>
+        </div>
+    </div>
+    <section>
+        <div class="container px-4" style="margin-top: 20px;">
+            <div class="col justify-content-center">
+                <h2>Total de Usuários: {{rel_media_amigos.total_users}}</h1>
+                <h2>Total de Conexões: {{rel_media_amigos.total_amigos}}</h1>
+                <h2>Média de Conexões por Usuário: {{rel_media_amigos.media}}</h1>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Relatório usuarios mais conectados -->
+<div id="#MaisConectados">
+    <div class="bg-dark" style="padding: 20px; margin-top: 40px;">
+        <div class="container">
+            <div class="text-center text-white">
+                <h1 style="font-weight:bolder; font-size: 25px;">Relatório de Usuários Mais Conectados</h1><br>
+            </div>
+        </div>
+    </div>
+    <section>
+        <div class="container px-4" style="margin-top: 20px;">
+            <div class="col justify-content-center">
+                <table style="width: 90%;text-align: center;">
+                    <tr>
+                        <th style="width: 20%;">Posição</th>
+                        <th style="width: 40%;">Usuário</th>
+                        <th style="width: 30%;">Número de amigos</th>
+                    </tr>
+                    {% for field in rel_mais_conectados.gerar_relatorio %}
+                        <tr>
+                            <td>{{field.pos}}</td>
+                            <td>{{field.user.username}}</td>
+                            <td>{{field.qtd_amg}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </section>
 </div>
 {% endblock %}
