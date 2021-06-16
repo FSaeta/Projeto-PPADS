@@ -100,6 +100,40 @@ RNF6 - A disponibilidade da aplicação deverá atender o padrão 99.99%, em reg
 
 RNF7 - A documentação do sistema deverá apresentar indicativos de segurança dos dados cadastrais e transacionais para evitar possíveis invasões ao site.
 
+# 3- Casos de uso
+## 3.1- Diagrama de casos de uso
+
+![Diagrama de casos de uso](Diagramas/CasosdeUso/CasosDeUso.jpg)
+
+## 3.2- Especificações dos casos de uso
+
+![Fazer Login](/Diagramas/CasosdeUso/FazerLogin.png)
+
+![Cadastrar Usuário](/Diagramas/CasosdeUso/CadastrarUsuario.png)
+
+![Atualizar Cadastro](/Diagramas/CasosdeUso/AtualizarCadastro.jpg)
+
+![Propor Amizade](/Diagramas/CasosdeUso/ProporAmizade.png)
+
+![Cadastrar Item](/Diagramas/CasosdeUso/CadastrarItem.png)
+
+![Validar Item](/Diagramas/CasosdeUso/ValidarItem.png)
+![Validar Item2](/Diagramas/CasosdeUso/ValidarItem2.png)
+
+![Fazer Avaliação](/Diagramas/CasosdeUso/AvaliarItem.png)
+
+![Curtir Avaliação](/Diagramas/CasosdeUso/CurtirAvaliacao.png)
+
+![Comentar Avaliação](/Diagramas/CasosdeUso/ComentarAvaliacao.png)
+
+![Solicitar Relatorios](/Diagramas/CasosdeUso/SolicitarRelatorios.png)
+
+![Ver Avaliações Itens](/Diagramas/CasosdeUso/VerAvaliacoesItens.png)
+
+![Ver Avaliações Usuários](/Diagramas/CasosdeUso/VerAvaliacoesUsuarios.png)
+
+![Ver Detalhes Itens](/Diagramas/CasosdeUso/VerDetalhesItens.png)
+
 
 # 4- Navegação
 ## 4.1- Diagrama de Navegação
