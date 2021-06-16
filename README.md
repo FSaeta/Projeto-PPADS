@@ -135,117 +135,6 @@ RNF7 - A documentação do sistema deverá apresentar indicativos de segurança 
 ![Ver Detalhes Itens](/Diagramas/CasosdeUso/VerDetalhesItens.png)
 
 
-# 4- Navegação
-## 4.1- Diagrama de Navegação
-
-![Diagrama de Navegação](Diagramas/Navegacao.jpg)
-
-## 4.2- Wireframes
-###1. Tela de Login
-![Realizar Login](Diagramas/Wireframes/FazerLogin.png)
-&nbsp;
-&nbsp;
-###2. Tela de Registro de Usuário
-![Realizar Registro](Diagramas/Wireframes/FazerRegistro.png)
-&nbsp;
-&nbsp;
-###3. Alterar Registro
-![Alterar Registro](Diagramas/Wireframes/AlterarRegistro.png)
-&nbsp;
-&nbsp;
-###4. Excluir Registro
-![Excluir Registro](Diagramas/Wireframes/ExcluirRegistro.png)
-&nbsp;
-&nbsp;
-###5. Tela de senha/username incorretos
-![Excluir Registro](Diagramas/Wireframes/LoginIncorreto.png)
-&nbsp;
-&nbsp;
-###6. Menu de opções no perfil do usuário
-![Menu de opções do perfil](Diagramas/Wireframes/MenuOpcoesPerfil.png)
-&nbsp;
-&nbsp;
-###7. Tela Principal de Cadastro
-![Principal de Cadastro](Diagramas/Wireframes/PrincipalDeCadastro.jpeg)
-&nbsp;
-&nbsp;
-###8. Tela de Cadastro de Filme
-![Principal de Cadastro](Diagramas/Wireframes/CadastrarFilme.jpeg)
-&nbsp;
-&nbsp;
-###9. Tela de Cadastro de Serie
-![Principal de Cadastro](Diagramas/Wireframes/CadastrarSerie.jpeg)
-&nbsp;
-&nbsp;
-###10. Tela de Cadastro de Livro
-![Principal de Cadastro](Diagramas/Wireframes/CadastrarLivro.jpeg)
-&nbsp;
-&nbsp;
-###11. Tela de Cadastro Efetuado
-![Cadastro Efetuado](Diagramas/Wireframes/CadastroEfetuado.jpeg)
-&nbsp;
-&nbsp;
-###12. Tela de Cadastro de livro inválido
-![Cadastro de livro inválido](Diagramas/Wireframes/LivroCadastrado.jpg)
-&nbsp;
-&nbsp;
-###13. Tela de Cadastro de série inválido
-![Cadastro de série inválido](Diagramas/Wireframes/SerieCadastrada.jpg)
-&nbsp;
-&nbsp;
-###13. Tela de Cadastro de filme inválido
-![Cadastro de filme inválido](Diagramas/Wireframes/FilmeCadastrado.jpg)
-&nbsp;
-&nbsp;
-###14. Tela de Nova Avaliação
-![Nova Avaliação](Diagramas/Wireframes/FazerAvaliacao.png)
-&nbsp;
-&nbsp;
-###15. Tela de Reagir e Comentar Avaliações e Comentários
-![Reações e comentarios](Diagramas/Wireframes/ReagirAvaliacao.png)
-&nbsp;
-&nbsp;
-###16. Tela de Itens cadastrados a serem validados
-![Itens cadastrados](Diagramas/Wireframes/ValidarCadastros.png)
-&nbsp;
-&nbsp;
-###17. Tela de validar Cadastro de Item
-![Validar cadastro](Diagramas/Wireframes/ValidarCadastro.png)
-&nbsp;
-&nbsp;
-###18. Tela de Procurar Amigos
-![Validar cadastro](Diagramas/Wireframes/ProcurarAmigos.jpeg)
-&nbsp;
-&nbsp;
-###19. Tela de Receber recomendações
-![Receber recomendações](Diagramas/Wireframes/Recomendacoes.jpg)
-&nbsp;
-&nbsp;
-###20. Tela de Receber sugestões de amizades
-![Receber sugestões de amizades](Diagramas/Wireframes/SugestoesAmizades.png)
-&nbsp;
-&nbsp;
-###21. Tela de Busca de amigos
-![Busca de amigos](Diagramas/Wireframes/BuscaAmigos.png)
-&nbsp;
-&nbsp;
-###22. Tela de de amigos
-![Amigos](Diagramas/Wireframes/Amigos.png)
-&nbsp;
-&nbsp;
-###23. Tela de Propor relacionamento
-![Propor relacionamento](Diagramas/Wireframes/ProporRelacionamento.png)
-&nbsp;
-&nbsp;
-###24. Tela de avaliação excluida
-![Avaliação excluida](Diagramas/Wireframes/AvaliacaoExcluida.png)
-&nbsp;
-&nbsp;
-###25. Tela de comentário excluido
-![Comentário excluido](Diagramas/Wireframes/ComentarioExcluido.png)
-&nbsp;
-&nbsp;
-
 # 5- Diagramas de Sequencias
 
 ## Fazer Login
@@ -287,11 +176,46 @@ RNF7 - A documentação do sistema deverá apresentar indicativos de segurança 
 ## Ver Detalhes Itens
 ![Ver Detalhes Itens](Diagramas/Sequencias/VerDetalhesItem.jpg)
 
-&nbsp;
-# 6- Diagrama de Classes
-
-![Diagrama de Classes](Diagramas/Classes/classes.png)
-&nbsp;
-
-# 7- Diagrama de Domínio
+# 6- Diagrama de Domínio
 ![Diagrama de Dominio](Diagramas/DiagramaDominio.jpg)
+&nbsp;
+
+# 7- Diagrama de Classes
+![Diagrama de Classes](Diagramas/DiagramaClasses.jpg)
+
+# 8 - Diagrama de Navegação
+![Diagrama de Navegação](Diagramas/Navegacao.jpg)
+
+# 9 - Wireframes
+### 1. Tela de Login
+<img src="Diagramas/Wireframes/FazerLogin.png" width="300">
+
+### 2. Tela de Cadastro de Usuário
+<img src="Diagramas/Wireframes/CadastrarUsuario.png" width="300">
+
+### 3. Atualizar Cadastro
+<img src="Diagramas/Wireframes/AtualizarCadastro.png" width="300">
+
+### 4. Cadastro de Item
+<img src="Diagramas/Wireframes/CadastrarItem.png" width="300">
+
+### 5. Tela de Amigos
+<img src="Diagramas/Wireframes/ProporAmizade.png" width="300">
+
+### 6. Tela Principal
+<img src="Diagramas/Wireframes/Index.png" width="300">
+
+### 7. Ver Avaliações dos Itens / Usuários
+<img src="Diagramas/Wireframes/VerAvaliacoesUsuario.png" width="300">
+
+### 8. Curtir / Comentar Avaliação
+<img src="Diagramas/Wireframes/VerAvaliacoesUsuario.png" width="300">
+
+### 9. Tela dos Itens na Biblioteca
+<img src="Diagramas/Wireframes/VerDetalhesItem.png" width="300">
+
+### 10. Tela dos Relatórios
+<img src="Diagramas/Wireframes/SolicitarRelatorios.png" width="300">
+
+### 11. Tela da Validação de Itens
+<img src="Diagramas/Wireframes/ValidarItem.png" width="300">
